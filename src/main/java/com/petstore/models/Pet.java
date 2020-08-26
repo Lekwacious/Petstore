@@ -28,6 +28,9 @@ public class Pet {
 
     private Date birthDate;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "petStore")
+    private Store petStore;
 
 
     public Integer getId() {
@@ -84,6 +87,14 @@ public class Pet {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public Store getPetStore() {
+        return petStore;
+    }
+
+    public void setPetStore(Store petStore) {
+        this.petStore = petStore;
     }
 
     @Override
