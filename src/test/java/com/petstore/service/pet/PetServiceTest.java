@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -46,9 +48,31 @@ class PetServiceTest {
     @Test
 
     void findById(){
-        when(petService.findById(1)).thenReturn(Optional.of(Pet.class));
-        petService.findById(1);
-        verify(petRepository, times(1)).save(testPet);
+        when(petService.findById(11)).thenReturn(Optional.of(testPet));
+        petRepository.findById(11);
+        verify(petRepository, times(1)).findById(11);
     }
 
+    @Test
+    void update(){
+        when(petService.update(testPet)).thenReturn(testPet);
+        petService.update(testPet);
+
+        verify(petRepository, times(1)).save(testPet);
+    }
+    @Test
+    void delete(){
+        doNothing().when(petRepository).delete(testPet);
+        petService.delete(11);
+
+        verify(petRepository, times(1)).deleteById(11);
+    }
+    @Test
+    void findAll(){
+        List<Pet> petList = new ArrayList<>();
+        when(petService.findAll()).thenReturn(petList);
+        petService.findAll();
+
+        verify(petRepository, times(1)).findAll();
+    }
 }
